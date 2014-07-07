@@ -1,4 +1,4 @@
-// Generated on 2014-07-06 using generator-angular 0.9.2
+// Generated on 2014-06-25 using generator-angular 0.9.1
 'use strict';
 
 // # Globbing
@@ -6,6 +6,8 @@
 // 'test/spec/{,*/}*.js'
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
+
+var modRewrite = require('connect-modrewrite');
 
 module.exports = function (grunt) {
 
@@ -18,7 +20,7 @@ module.exports = function (grunt) {
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
-    dist: 'dist'
+    dist: '../public'
   };
 
   // Define the configuration for all the tasks
@@ -38,7 +40,7 @@ module.exports = function (grunt) {
         tasks: ['newer:coffee:dist']
       },
       coffeeTest: {
-        files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}'],
+        files: ['test/spec/{,*/}*.{coffee,litcoffee,coffee.md}', 'test/{,*/}*.{coffee,litcoffee,coffee.md}'],
         tasks: ['newer:coffee:test', 'karma']
       },
       compass: {
@@ -56,6 +58,7 @@ module.exports = function (grunt) {
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
           '.tmp/scripts/{,*/}*.js',
+          '.tmp/views/{,*/}*.html',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -69,18 +72,50 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      proxies: {
+        context: '/',
+        host: 'localhost',
+        port: 3000,
+        https: false,
+        changeOrigin: true
+      },
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
+          base: [
+            '.tmp',
+            '<%= yeoman.app %>'
+          ],
+          middleware: function (connect, options) {
+            var middlewares = [];
+            var directory = options.directory || options.base[options.base.length - 1];
+
+            // enable Angular's HTML5 mode
+            middlewares.push(modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png$ /index.html [L]']));
+
+            if (!Array.isArray(options.base)) {
+              options.base = [options.base];
+            }
+            options.base.forEach(function(base) {
+              // Serve static files.
+              middlewares.push(connect.static(base));
+
+            });
+
+            middlewares.push(
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
-            ];
+              )
+            )
+
+            // Setup the proxy
+            middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+
+            // Make directory browse-able.
+            middlewares.push(connect.directory(directory));
+
+            return middlewares;
           }
         }
       },
@@ -89,6 +124,7 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function (connect) {
             return [
+              modRewrite(['^[^\\.]*$ /index.html [L]']),
               connect.static('.tmp'),
               connect.static('test'),
               connect().use(
@@ -158,7 +194,7 @@ module.exports = function (grunt) {
       },
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath:  /..\//
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -197,13 +233,13 @@ module.exports = function (grunt) {
       options: {
         sassDir: '<%= yeoman.app %>/styles',
         cssDir: '.tmp/styles',
-        generatedImagesDir: '.tmp/images/generated',
+        generatedImagesDir: '.tmp/images/sprites',
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
         fontsDir: '<%= yeoman.app %>/styles/fonts',
         importPath: './bower_components',
         httpImagesPath: '/images',
-        httpGeneratedImagesPath: '/images/generated',
+        httpGeneratedImagesPath: '/images/sprites',
         httpFontsPath: '/styles/fonts',
         relativeAssets: false,
         assetCacheBuster: false,
@@ -211,7 +247,7 @@ module.exports = function (grunt) {
       },
       dist: {
         options: {
-          generatedImagesDir: '<%= yeoman.dist %>/images/generated'
+          generatedImagesDir: '<%= yeoman.dist %>/images/sprites'
         }
       },
       server: {
@@ -422,6 +458,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer',
+      'configureProxies:server',
       'connect:livereload',
       'watch'
     ]);
@@ -454,7 +491,7 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
   ]);
 
   grunt.registerTask('default', [

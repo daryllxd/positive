@@ -28,7 +28,8 @@
     "jshint-stylish": "^0.2.0",
     "load-grunt-tasks": "^0.4.0",
     "time-grunt": "^0.3.1",
-    "grunt-connect-proxy": "^0.1.10"
+    "grunt-connect-proxy": "^0.1.10",
+    "connect-modrewrite": "^0.7.6"
   },
   "engines": {
     "node": ">=0.10.0"
