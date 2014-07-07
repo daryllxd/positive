@@ -7,8 +7,6 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-var modRewrite = require('connect-modrewrite');
-
 module.exports = function (grunt) {
 
   // Load grunt tasks automatically
@@ -89,9 +87,6 @@ module.exports = function (grunt) {
           middleware: function (connect, options) {
             var middlewares = [];
             var directory = options.directory || options.base[options.base.length - 1];
-
-            // enable Angular's HTML5 mode
-            middlewares.push(modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png$ /index.html [L]']));
 
             if (!Array.isArray(options.base)) {
               options.base = [options.base];
