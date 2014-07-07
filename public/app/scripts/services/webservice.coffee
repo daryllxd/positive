@@ -22,8 +22,5 @@ class WebService
   getGreeting: () ->
     @$http.get("#{@baseUrl}/home")
 
-  testThis: () ->
-    alert('hehe')
-
 webService = angular.module 'frontendApp.webService', []
 webService.factory 'webService', ['$http', ($http) -> new WebService($http)]

@@ -13,6 +13,7 @@ group :development, :test do
   gem 'newrelic_rpm'
   gem 'pry'
   gem 'pry-rails'
+  gem 'pry-remote'
   gem 'rspec-rails', '2.14.0'
   gem 'spring-commands-rspec'
 end
