@@ -7,6 +7,10 @@ gem 'rails', '4.0.3'
 gem 'pg'
 gem 'rails-api'
 
+group :development do
+  gem 'rack-cors'
+end
+
 group :development, :test do
   gem 'childprocess', '0.3.9'
   gem 'hirb'
