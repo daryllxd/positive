@@ -3,4 +3,8 @@ class Api::V1::HomeController < ActionController::API
     render json: 'hello world'
   end
 
+  def create
+    render json: 'posted!'
+  end
+
 end

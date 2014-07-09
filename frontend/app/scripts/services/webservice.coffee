@@ -20,11 +20,11 @@ class WebService
     @baseUrl = "/api/v1"
 
   getGreeting: () ->
-    arg = @$http.get("http://localhost:3000/api/v1/home")
-    console.log arg
-    aw = @$http.get("#{@baseUrl}/home")
-    console.log(aw)
-    console.log('aaaa')
+    @$http.get("#{@baseUrl}/home").success (data) ->
+      console.log(data)
+
+    @$http.post("#{@baseUrl}/home").success (data) ->
+      console.log(data)
 
 webService = angular.module 'frontendApp.webService', []
 webService.factory 'webService', ['$http', ($http) -> new WebService($http)]
