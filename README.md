@@ -10,3 +10,7 @@ Starting:
     $ cd ..
     $ rake db:setup
     $ foreman start # Starts Rails at port 3000 and Angular at port 9000.
+
+Start using tmux:
+
+    $ sh ./tmux.sh # Starts Grunt and Rails in different processes.
