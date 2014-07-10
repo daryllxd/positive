@@ -31,14 +31,9 @@ class MainCtrl
 
   getData: ->
     promise = @webService.getGreeting()
-    # promise.then @success, @error
 
   success: (response) ->
     console.log 'hehe'
-    # console.log(response)
-    # alert(response)
-    # @$scope.message = response.data.message
-    alert(@$scope.message)
 
   error: (response) ->
     @$scope.message = "Error"
