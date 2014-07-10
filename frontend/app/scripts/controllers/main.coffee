@@ -2,41 +2,26 @@
 
 ###*
  # @ngdoc function
- # @name frontendApp.controller:MainCtrl
+ # @name frontendApp.controller:MainController
  # @description
- # # MainCtrl
+ # # MainController
  # Controller of the frontendApp
 ###
-# angular.module('frontendApp')
-#   .controller 'MainCtrl', ($scope) ->
-#     $scope.awesomeThings = [
-#       'HTML5 Boilerplate'
-#       'AngularJS'
-#       'Karma'
-#     ]
-#     @getData()
-#
 
-class MainCtrl
-  constructor: (@$scope, @webService) ->
-    @setup()
+angular.module('frontendApp')
+  .controller 'MainController', ($scope, webService) ->
+    $scope.constructora =  ->
+      $scope.setup()
+      $scope.answers = []
 
-  setup: ->
-    @$scope.awesomeThings = [
-      'HTML5 Boilerplate'
-      'AngularJS'
-      'Karma'
-    ]
-    @getData()
+    $scope.setup =  ->
+      console.log('???')
+      $scope.getData()
 
-  getData: ->
-    promise = @webService.getGreeting()
+    $scope.getData = ->
+      promise = webService.getGreeting()
+      console.log(promise)
 
-  success: (response) ->
-    console.log 'hehe'
+    $scope.showChoices = () ->
+      alert('hi!')
 
-  error: (response) ->
-    @$scope.message = "Error"
-
-MainCtrl.$inject = ['$scope', 'webService']
-angular.module('frontendApp').controller 'MainCtrl', MainCtrl
