@@ -10,12 +10,9 @@
 
 angular.module('frontendApp')
   .controller 'MainController', ($scope, webService) ->
-    $scope.constructora =  ->
-      $scope.setup()
-      $scope.answers = []
-
     $scope.setup =  ->
       console.log('???')
+      $scope.answers = []
       $scope.getData()
 
     $scope.getData = ->
@@ -25,3 +22,5 @@ angular.module('frontendApp')
     $scope.showChoices = () ->
       alert('hi!')
 
+    $scope.printEverything = () ->
+      console.log $scope.firstAnswer
