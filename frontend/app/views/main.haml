@@ -1,0 +1,27 @@
+.jumbotron{"ng-controller" => "MainController", "ng-init" => "setup()"}
+  %h1 It's a beautiful day!
+  %p.lead
+    %img{:alt => "I'm Yeoman", :src => "images/yeoman.png"}
+      %br
+        Write down three things you are happy about.
+  %p It can be something very simple like the food you just ate or something very complex like the family you have.
+  .form-group
+    %input.form-control{"ng-model" => "firstAnswer", :placeholder => "First thing???", :type => "text"}/
+  .form-group
+    %input.form-control{"ng-model" => "secondAnswer", :placeholder => "Second thing???", :type => "text"}/
+  .form-group
+    %input.form-control{"ng-model" => "thirdAnswer", :placeholder => "Third thing???", :type => "text"}
+  .form-group
+    %p
+      %a.btn.btn-lg.btn-success{"ng-click" => "printEverything()"}
+        Splendid!
+        %span.glyphicon.glyphicon-ok
+.row.marketing
+  %h4 HTML5 Boilerplate
+  %p
+    Data from research goes here.
+  %h4 Angular
+  %p
+    AngularJS is a toolset for building the framework most suited to your application development.
+  %h4 Karma
+  %p Spectacular Test Runner for JavaScript.

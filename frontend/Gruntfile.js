@@ -15,6 +15,8 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  grunt.loadNpmTasks('grunt-contrib-haml');
+
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
@@ -26,6 +28,27 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    haml: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/views',
+          src: '{,*/}*.haml',
+          dest: '<%= yeoman.dist %>/views',
+          ext: '.html'
+        }]
+      },
+      dev: {
+        files: [{
+          expand: true,
+          cwd: '<%= yeoman.app %>/views',
+          src: '{,*/}*.haml',
+          dest: '.tmp/views',
+          ext: '.html'
+        }]
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -47,6 +70,10 @@ module.exports = function (grunt) {
       },
       gruntfile: {
         files: ['Gruntfile.js']
+      },
+      haml: {
+        files: ['<%= yeoman.app %>/views/{,*/}*.haml'],
+        tasks: ['haml:dev']
       },
       livereload: {
         options: {
@@ -418,14 +445,17 @@ module.exports = function (grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
+        'haml',
         'coffee:dist',
         'compass:server'
       ],
       test: [
+        'haml',
         'coffee',
         'compass'
       ],
       dist: [
+        'haml:dist',
         'coffee',
         'compass:dist',
         'imagemin',
@@ -482,6 +512,7 @@ module.exports = function (grunt) {
     'ngmin',
     'copy:dist',
     'cdnify',
+    'haml',
     'cssmin',
     'uglify',
     'filerev',

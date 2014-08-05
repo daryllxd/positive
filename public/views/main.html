@@ -1,0 +1,40 @@
+<div class='jumbotron' ng-controller='MainController' ng-init='setup()'>
+  <h1>It's a beautiful days!</h1>
+  <p class='lead'>
+    <img alt="I'm Yeoman" src='images/yeoman.png'>
+      <br>
+        Write down three things you are happy about.
+      </br>
+    </img>
+  </p>
+  <p>It can be something very simple like the food you just ate or something very complex like the family you have.</p>
+  <div class='form-group'>
+    <input class='form-control' ng-model='firstAnswer' placeholder='First thing???' type='text'>
+  </div>
+  <div class='form-group'>
+    <input class='form-control' ng-model='secondAnswer' placeholder='Second thing???' type='text'>
+  </div>
+  <div class='form-group'>
+    <input class='form-control' ng-model='thirdAnswer' placeholder='Third thing???' type='text'>
+  </div>
+  <div class='form-group'>
+    <p>
+      <a class='btn btn-lg btn-success' ng-click='printEverything()'>
+        Splendid!
+        <span class='glyphicon glyphicon-ok'></span>
+      </a>
+    </p>
+  </div>
+</div>
+<div class='row marketing'>
+  <h4>HTML5 Boilerplate</h4>
+  <p>
+    Data from research goes here.
+  </p>
+  <h4>Angular</h4>
+  <p>
+    AngularJS is a toolset for building the framework most suited to your application development.
+  </p>
+  <h4>Karma</h4>
+  <p>Spectacular Test Runner for JavaScript.</p>
+</div>
